@@ -7,7 +7,9 @@ This app uses TensorFlow JS technology to track face meshs using a pre-trained m
 More details can be found about this API at:
 https://github.com/tensorflow/tfjs-models/tree/master/facemesh
 
-**Model details**
+---
+
+## Model details
 Beard model by Indoorextremesports (https://sketchfab.com/Indoorextremesports)
 License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/beard-a7abe96184a64e9f88df8d6249002a84
