@@ -66,15 +66,18 @@ async function setupCamera() {
 //------------- Create THREE JS Elements -------------//
 async function startThreeJS(){
   rosto.scene = new THREE.Scene();
-  rosto.camera = new THREE.OrthographicCamera(rosto.videoSize/-2, rosto.videoSize/2, rosto.videoSize/-2, rosto.videoSize/2, 0.1, 1000 );
+  rosto.camera = new THREE.OrthographicCamera(rosto.videoSize/-2, rosto.videoSize/2, rosto.videoSize/-2, rosto.videoSize/2, 0.1, 3000 );
   rosto.renderer = new THREE.WebGLRenderer({alpha:true});
   rosto.renderer.setSize( rosto.videoSize, rosto.videoSize );
   document.getElementById('output').appendChild( rosto.renderer.domElement );
 
-  var light = new THREE.SpotLight( 0xffffff, 3, 0 );
+  var light = new THREE.SpotLight( 0xffffff, 1, 0 );
   light.position.set( 250, 0, 100 );
   rosto.scene.add( light );
-  light = new THREE.SpotLight( 0xffffff, 3, 0 );
+  light = new THREE.SpotLight( 0xffffff, 0.5, 0 );
+  light.position.set( -250, 0, 100 );
+  rosto.scene.add( light );
+  light = new THREE.AmbientLight( 0xffffff, 0.5, 0 );
   light.position.set( -250, 0, 100 );
   rosto.scene.add( light );
 
@@ -117,7 +120,6 @@ async function startThreeJS(){
   var videoTexture = new THREE.VideoTexture(rosto.video);
   videoTexture.minFilter = THREE.LinearFilter;
   videoTexture.magFilter = THREE.LinearFilter;
-  videoTexture.format = THREE.RGBFormat;
 
   var geom = new THREE.PlaneGeometry(rosto.videoSize, rosto.videoSize, 2, 2);
   var mat = new THREE.MeshBasicMaterial( {side: THREE.DoubleSide, map:videoTexture} );
@@ -128,7 +130,7 @@ async function startThreeJS(){
   plane.texture = videoTexture;
   rosto.scene.add(plane);
 
-  rosto.camera.position.z = 100;
+  rosto.camera.position.z = 500;
   rosto.threeJSLoaded = true;
 }
 
@@ -275,6 +277,12 @@ function drawModel(){
         rosto.threeJSCurrentModel = gltf.scene;
 
         rosto.scene.add(rosto.threeJSCurrentModel);
+
+        traverseMaterials(rosto.threeJSCurrentModel, (material) => {
+          if (material.map) material.map.encoding = THREE.LinearEncoding;
+          if (material.emissiveMap) material.emissiveMap.encoding = THREE.LinearEncoding;
+          if (material.map || material.emissiveMap) material.needsUpdate = true;
+        });
 
         rosto.threeJSCurrentModel.traverse(function(child){
           if (child.isMesh){
@@ -478,6 +486,16 @@ function slideModelMenu(dir){
   var elements = document.getElementsByClassName('models-button-text');
   var requiredElement = elements[0];
   requiredElement.style.marginLeft = 10-(rosto.threeJSModelID*101) + "%";
+}
+
+function traverseMaterials (object, callback) {
+  object.traverse((node) => {
+    if (!node.isMesh) return;
+    const materials = Array.isArray(node.material)
+      ? node.material
+      : [node.material];
+    materials.forEach(callback);
+  });
 }
 
 //------------- Main Function -------------//
