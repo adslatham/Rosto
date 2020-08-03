@@ -10,8 +10,8 @@ https://github.com/tensorflow/tfjs-models/tree/master/facemesh
 ---
 
 ## Model details
-> Beard model by Indoorextremesports (https://sketchfab.com/Indoorextremesports)
-> License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+> Beard model by Indoorextremesports (https://sketchfab.com/Indoorextremesports)<br/>
+> License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)<br/>
 > Source: https://sketchfab.com/3d-models/beard-a7abe96184a64e9f88df8d6249002a84
 
 > Top Hat model by Borgen (https://sketchfab.com/swedenbrainstew)
