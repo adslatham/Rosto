@@ -10,10 +10,10 @@ https://github.com/tensorflow/tfjs-models/tree/master/facemesh
 ---
 
 ## UI explorations with Fluid UI
-[![UI Image](https://raw.githubusercontent.com/adslatham/Rosto/master/img/RostoUI.png]()
+[![UIImage](https://raw.githubusercontent.com/adslatham/Rosto/master/img/RostoUI.png)]()
 
 ## User Flow with diagrams.net
-[![Flow Chart](https://raw.githubusercontent.com/adslatham/Rosto/master/img/FlowChartResultant.jpg]()
+[![Flow Chart](https://raw.githubusercontent.com/adslatham/Rosto/master/img/FlowChartResultant.jpg)]()
 
 ---
 
