@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Rosto</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="logo">
+          <p id="logo-text">Rosto</p>
+        </div>
+        <div id="main">
+            <div class="container">
+                <div id="output" class="canvas-wrapper">
+                    <video id="video" playsinline style="display:none"></video>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+          <input type="checkbox" id="toggle" />
+          <label id="show-menu" for="toggle">
+            <div class="btn">
+              <i class="fas fa-bars toggleBtn menuBtn"></i>
+              <i class="fas fa-times toggleBtn closeBtn"></i>
+            </div>
+            <p class="button-text">Face Detection</p>
+            <div class="btn" onclick="setFaceDisplay(1)">
+              <i class="fas fa-braille"></i>
+            </div>
+            <p class="button-text">Facial Points</p>
+            <div class="btn" onclick="setFaceDisplay(2)">
+              <i class="fas fa-square"></i>
+            </div>
+            <p class="button-text">Bounding Box</p>
+            <div class="btn"onclick="setFaceDisplay(3)">
+              <i class="fas fa-plus"></i>
+            </div>
+            <p class="button-text">Center Point</p>
+            <div class="btn"onclick="setFaceDisplay(4)">
+              <i class="fas fa-cube"></i>
+            </div>
+            <p class="button-text">Augmentation</p>
+          </label>
+          <div id="modelsMenu" class="hide">
+          </div>
+        </div>
+
+        <div id="helpers">
+            <div id="loader">
+
+            </div>
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+    <script src="js/rosto.js" async defer></script>
+</html>
