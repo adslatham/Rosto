@@ -14,47 +14,56 @@
     <body>
         <div id="logo">
           <p id="logo-text">Rosto</p>
+          <p id="logo-sub-text">In-browser face tracking and augmentation</p>
         </div>
         <div id="main">
-            <div class="container">
-                <div id="output" class="canvas-wrapper">
-                    <video id="video" playsinline style="display:none"></video>
-                </div>
+            <div id="output" class="canvas-wrapper">
+              <video id="video" playsinline style="display:none"></video>
+          </div>
+          <div class="menus">
+            <div class="menu">
+              <div class="text-scroll">
+                <p class="button-text">None</p>
+                <p class="button-text">Face Points</p>
+                <p class="button-text">Bounding Box</p>
+                <p class="button-text">Centre Point</p>
+                <p class="button-text">Augmentation</p>
+              </div>
+              <div class="btn left-menu-icon inactive" onclick="slideMenu('l')">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="btn right-menu-icon" onclick="slideMenu('r')">
+                <i class="fas fa-angle-right"></i>
+              </div>
             </div>
-        </div>
-        <div class="menu">
-          <input type="checkbox" id="toggle" />
-          <label id="show-menu" for="toggle">
-            <div class="btn">
-              <i class="fas fa-bars toggleBtn menuBtn"></i>
-              <i class="fas fa-times toggleBtn closeBtn"></i>
+            <div id="models-menu" class="models-menu hide">
+              <div id="models-text" class="models-text-scroll">
+              </div>
+              <div class="btn models-left-menu-icon inactive" onclick="slideModelMenu('l')">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="btn models-right-menu-icon" onclick="slideModelMenu('r')">
+                <i class="fas fa-angle-right"></i>
+              </div>
             </div>
-            <p class="button-text">Face Detection</p>
-            <div class="btn" onclick="setFaceDisplay(1)">
-              <i class="fas fa-braille"></i>
-            </div>
-            <p class="button-text">Facial Points</p>
-            <div class="btn" onclick="setFaceDisplay(2)">
-              <i class="fas fa-square"></i>
-            </div>
-            <p class="button-text">Bounding Box</p>
-            <div class="btn"onclick="setFaceDisplay(3)">
-              <i class="fas fa-plus"></i>
-            </div>
-            <p class="button-text">Center Point</p>
-            <div class="btn"onclick="setFaceDisplay(4)">
-              <i class="fas fa-cube"></i>
-            </div>
-            <p class="button-text">Augmentation</p>
-          </label>
-          <div id="modelsMenu" class="hide">
           </div>
         </div>
 
         <div id="helpers">
-            <div id="loader">
+          <div id="loading">
+            <div class="loader1">
 
             </div>
+            <div class="loader2">
+
+            </div>
+            <p class="loader-text">
+              Loading Rosto...</br>
+            </p>
+            <div class="loader-bg">
+
+            </div>
+          </div>
         </div>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script>

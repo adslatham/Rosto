@@ -50,8 +50,8 @@ async function setupCamera() {
     'audio': false,
     'video': {
       facingMode: 'user',
-      width: rosto.mobile ? undefined : rosto.videoSize,
-      height: rosto.mobile ? undefined : rosto.videoSize
+      width: rosto.videoSize,
+      height: rosto.videoSize
     },
   });
   rosto.video.srcObject = stream;
@@ -177,14 +177,15 @@ function hideFaceObjects(id){
       hideFaceCentrePoint();
       break;
     case 4:
-      hideModelMenu();
       hideModel(1);
       break;
     default:
+      if (rosto.displayOption != 4){
+        hideModelMenu();
+      }
       hideFacePoints();
       hideFaceBoundingBox();
       hideFaceCentrePoint();
-      hideModelMenu();
       hideModel(0);
       break;
   }
@@ -246,20 +247,20 @@ function loadModelData(){
   $.getJSON("models/modelData.json", function(json) {
     for(var i = 0; i < json.models.length; i++){
       rosto.models.push(json.models[i]);
-      document.getElementById("modelsMenu").innerHTML += '<div class="modelBtn" onclick="setModelID('+ i +')"><i class="fas fa-cube"></i></div><p class="model-button-text">'+ json.models[i].name +'</p><div class="breaker"></div>';
+      document.getElementById("models-text").innerHTML += '<p class="models-button-text">'+ json.models[i].name +'</p>';
     }
   });
 }
 
 function showModelMenu(){
-  if(document.getElementById("modelsMenu").offsetParent === null){
-    document.getElementById("modelsMenu").className = "show";
+  if(document.getElementById("models-menu").classList.contains("hide")){
+    document.getElementById("models-menu").classList.remove("hide");
   }
 }
 
 function hideModelMenu(){
-  if(document.getElementById("modelsMenu").offsetParent !== null){
-    document.getElementById("modelsMenu").className = "hide";
+  if(!document.getElementById("models-menu").classList.contains("hide")){
+    document.getElementById("models-menu").classList.add("hide");
   }
 }
 
@@ -413,15 +414,70 @@ function setFaceRotations(){
 }
 
 //------------- Helper Functions -------------//
-function setFaceDisplay(num){
-  rosto.displayOption = num;
-  hideFaceObjects(0);
+function slideMenu(dir){
+  var leftMenu = document.getElementsByClassName('left-menu-icon');
+  var rightMenu = document.getElementsByClassName('right-menu-icon');
+
+  if (dir == "r"){
+    if (rosto.displayOption < 4){
+      rosto.displayOption++;
+      hideFaceObjects(0);
+      if (rosto.displayOption == 4){
+        rosto.threeJSLoadNewModel = true;
+        rightMenu[0].classList.add('inactive');
+      }else{
+        rightMenu[0].classList.remove('inactive');
+      }
+      leftMenu[0].classList.remove('inactive');
+    }
+  }else{
+    if (rosto.displayOption > 0){
+      rosto.displayOption--;
+      hideFaceObjects(0);
+      if (rosto.displayOption == 0){
+        leftMenu[0].classList.add('inactive');
+      }else{
+        leftMenu[0].classList.remove('inactive');
+      }
+      rightMenu[0].classList.remove('inactive');
+    }
+  }
+  var elements = document.getElementsByClassName('button-text');
+  var requiredElement = elements[0];
+  requiredElement.style.marginLeft = 10-(rosto.displayOption*101) + "%";
 }
 
-function setModelID(num){
-  rosto.threeJSModelID = num;
-  rosto.threeJSLoadNewModel = true;
-  hideFaceObjects(0);
+function slideModelMenu(dir){
+  if (dir == "r"){
+    if (rosto.threeJSModelID < (rosto.models.length-1)){
+      rosto.threeJSModelID++;
+      hideFaceObjects(0);
+      rosto.threeJSLoadNewModel = true;
+    }
+  }else{
+    if (rosto.threeJSModelID > 0){
+      rosto.threeJSModelID--;
+      hideFaceObjects(0);
+      rosto.threeJSLoadNewModel = true;
+    }
+  }
+
+  var leftMenu = document.getElementsByClassName('models-left-menu-icon');
+  var rightMenu = document.getElementsByClassName('models-right-menu-icon');
+
+  if (rosto.threeJSModelID == 0){
+    leftMenu[0].classList.add('inactive');
+  }else{
+    leftMenu[0].classList.remove('inactive');
+  }
+  if (rosto.threeJSModelID == (rosto.models.length-1)){
+    rightMenu[0].classList.add('inactive');
+  }else{
+    rightMenu[0].classList.remove('inactive');
+  }
+  var elements = document.getElementsByClassName('models-button-text');
+  var requiredElement = elements[0];
+  requiredElement.style.marginLeft = 10-(rosto.threeJSModelID*101) + "%";
 }
 
 //------------- Main Function -------------//
@@ -436,6 +492,11 @@ async function main() {
 
     // Load the MediaPipe facemesh model.
     rosto.model = await facemesh.load({maxFaces: 1});
+
+    if (rosto.loader == true){
+      document.getElementById("loading").classList.add("hide-loader");
+      rosto.loader = false;
+    }
   
     renderPrediction();
   }
